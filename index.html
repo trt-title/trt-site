@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="TRT - Title Research, Inc. Title searches and abstracts for DC, Maryland, Virginia, Delaware and West Virginia. 24-48 hour standard turnaround, same-day rush.">
+<title>TRT Title Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --paper: #FBFAF6;
+    --paper-2: #F2EFE6;
+    --ink: #131C1B;
+    --ink-deep: #0E1917;
+    --muted: #5C6A66;
+    --rule: #D9D4C6;
+    --seal: #2E5D4E;
+    --brass: #9C6B24;
+    --field: #FFFFFF;
+    --on-dark: #EDEAE0;
+    --on-dark-muted: #9FAEA8;
+    --dark-rule: #2B3B37;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0F1614;
+      --paper-2: #151F1C;
+      --ink: #E9E7DD;
+      --ink-deep: #0A1210;
+      --muted: #94A39D;
+      --rule: #27352F;
+      --seal: #74B49B;
+      --brass: #D6A75C;
+      --field: #121B18;
+      --on-dark: #EDEAE0;
+      --on-dark-muted: #9FAEA8;
+      --dark-rule: #27352F;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0F1614;
+    --paper-2: #151F1C;
+    --ink: #E9E7DD;
+    --ink-deep: #0A1210;
+    --muted: #94A39D;
+    --rule: #27352F;
+    --seal: #74B49B;
+    --brass: #D6A75C;
+    --field: #121B18;
+    --on-dark: #EDEAE0;
+    --on-dark-muted: #9FAEA8;
+    --dark-rule: #27352F;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { width: min(100% - 2.5rem, 70rem); margin-inline: auto; }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .72rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--brass);
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    margin: 0 0 1rem;
+  }
+  .eyebrow::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    max-width: 5rem;
+    background: currentColor;
+    opacity: .45;
+  }
+
+  /* ============ dark jacket: masthead + hero ============ */
+  .jacket {
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.020) 0 1px, transparent 1px 9px),
+      radial-gradient(120% 90% at 78% 8%, #172724 0%, var(--ink-deep) 62%);
+    color: var(--on-dark);
+    border-bottom: 3px double var(--brass);
+  }
+
+  .masthead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    padding: 1.35rem 0;
+    border-bottom: 1px solid var(--dark-rule);
+  }
+  .brandline { display: flex; align-items: center; gap: .9rem; }
+  .brandline .seal { width: 46px; height: 46px; flex: none; }
+  .brandline .names { display: flex; flex-direction: column; line-height: 1.15; }
+  .brandline .names b {
+    font-family: "Spectral", Georgia, serif;
+    font-weight: 600;
+    font-size: 1.3rem;
+    letter-spacing: .1em;
+  }
+  .brandline .names span {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .68rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--on-dark-muted);
+    margin-top: .2rem;
+  }
+  .masthead nav { display: flex; gap: 1.6rem; align-items: center; flex-wrap: wrap; }
+  .masthead nav a {
+    color: var(--on-dark-muted);
+    text-decoration: none;
+    font-size: .92rem;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+  }
+  .masthead nav a:hover { color: var(--on-dark); border-bottom-color: var(--brass); }
+  .masthead nav a.cta {
+    color: var(--ink-deep);
+    background: var(--brass);
+    border: none;
+    padding: .55rem 1.15rem;
+    font-weight: 600;
+  }
+  .masthead nav a.cta:hover { background: var(--on-dark); color: var(--ink-deep); }
+
+  .hero { padding: 5.5rem 0 4.5rem; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 4rem; align-items: end; }
+  .hero h1 {
+    font-family: "Spectral", Georgia, serif;
+    font-weight: 500;
+    font-size: clamp(2.4rem, 5.4vw, 4rem);
+    line-height: 1.08;
+    letter-spacing: -.01em;
+    margin: 0 0 1.4rem;
+    text-wrap: balance;
+  }
+  .hero h1 em { font-style: italic; color: var(--brass); }
+  .hero p.lead {
+    max-width: 56ch;
+    font-size: 1.12rem;
+    color: var(--on-dark-muted);
+    margin: 0;
+  }
+  .jurisdictions { border-top: 1px solid var(--dark-rule); padding-top: 1.4rem; }
+  .jurisdictions dt {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .68rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--on-dark-muted);
+    margin-bottom: .9rem;
+  }
+  .jurisdictions dd { margin: 0; display: grid; gap: .55rem; }
+  .jurisdictions dd span {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    border-bottom: 1px dotted var(--dark-rule);
+    padding-bottom: .45rem;
+    font-family: "Spectral", Georgia, serif;
+    font-size: 1.02rem;
+  }
+  .jurisdictions dd span i {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-style: normal;
+    font-size: .72rem;
+    letter-spacing: .12em;
+    color: var(--brass);
+  }
+
+  /* ============ figures strip ============ */
+  .strip { background: var(--paper-2); border-bottom: 1px solid var(--rule); }
+  .strip .wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); }
+  .figure { padding: 2.2rem 2rem 2.2rem 0; border-right: 1px solid var(--rule); }
+  .figure:last-child { border-right: none; }
+  .figure dt {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .68rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .figure dd {
+    margin: .45rem 0 0;
+    font-family: "Spectral", Georgia, serif;
+    font-size: 1.75rem;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+  }
+  .figure dd small { display: block; font-family: "IBM Plex Sans", sans-serif; font-size: .92rem; font-weight: 400; color: var(--muted); margin-top: .25rem; }
+
+  /* ============ sections ============ */
+  section { padding: 5rem 0; }
+  section h2 {
+    font-family: "Spectral", Georgia, serif;
+    font-weight: 500;
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    margin: 0 0 2.5rem;
+    text-wrap: balance;
+  }
+
+  .ledger { border-top: 1px solid var(--rule); }
+  .ledger .row {
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 16rem) minmax(0, 1fr);
+    gap: 1rem 2rem;
+    padding: 1.7rem 0;
+    border-bottom: 1px solid var(--rule);
+    transition: background .18s ease;
+  }
+  .ledger .row:hover { background: var(--paper-2); }
+  .ledger .row .mark {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .72rem;
+    letter-spacing: .1em;
+    color: var(--brass);
+    padding-top: .35rem;
+  }
+  .ledger h3 { font-family: "Spectral", Georgia, serif; font-size: 1.2rem; font-weight: 600; margin: 0; }
+  .ledger p { margin: 0; color: var(--muted); }
+
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 2.5rem; padding: 0; margin: 0; list-style: none; counter-reset: step; }
+  .steps li { counter-increment: step; }
+  .steps li::before {
+    content: counter(step, decimal-leading-zero);
+    display: block;
+    font-family: "Spectral", Georgia, serif;
+    font-size: 2.4rem;
+    line-height: 1;
+    color: var(--seal);
+    opacity: .55;
+    margin-bottom: .7rem;
+  }
+  .steps h3 { font-family: "Spectral", Georgia, serif; font-size: 1.15rem; font-weight: 600; margin: 0 0 .4rem; padding-top: .8rem; border-top: 1px solid var(--rule); }
+  .steps p { margin: 0; color: var(--muted); font-size: .97rem; }
+
+  /* ============ order ============ */
+  #order { background: var(--paper-2); border-top: 1px solid var(--rule); }
+  .order-grid { display: grid; grid-template-columns: minmax(0, 20rem) minmax(0, 1fr); gap: 3.5rem; }
+  .order-note p { color: var(--muted); margin: 0 0 1rem; }
+  .order-note a { color: var(--ink); text-underline-offset: 3px; text-decoration-color: var(--brass); }
+
+  form { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1.2rem; }
+  .full { grid-column: 1 / -1; }
+  label { display: block; }
+  label span {
+    display: block;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .68rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: .4rem;
+  }
+  input, select, textarea {
+    width: 100%;
+    font: inherit;
+    font-size: .97rem;
+    color: var(--ink);
+    background: var(--field);
+    border: 1px solid var(--rule);
+    border-radius: 0;
+    padding: .68rem .8rem;
+  }
+  input:hover, select:hover, textarea:hover { border-color: var(--muted); }
+  textarea { min-height: 7rem; resize: vertical; }
+  input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visible {
+    outline: 2px solid var(--brass);
+    outline-offset: 2px;
+  }
+  button {
+    font: inherit;
+    font-weight: 600;
+    letter-spacing: .02em;
+    background: var(--seal);
+    color: var(--paper);
+    border: none;
+    padding: .85rem 2.2rem;
+    cursor: pointer;
+    justify-self: start;
+    transition: background .18s ease;
+  }
+  button:hover { background: var(--brass); }
+
+  /* ============ footer ============ */
+  footer { background: var(--ink-deep); color: var(--on-dark-muted); border-top: 3px double var(--brass); padding: 2.5rem 0; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 1.2rem; flex-wrap: wrap; align-items: center; }
+  footer p { margin: 0; font-size: .9rem; }
+  footer a { color: var(--on-dark); text-decoration: none; border-bottom: 1px solid var(--brass); }
+
+  @media (max-width: 62rem) {
+    .hero { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 0 3.5rem; }
+    .order-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .ledger .row { grid-template-columns: 2.5rem 1fr; }
+    .ledger .row p { grid-column: 2; }
+    .figure { border-right: none; border-bottom: 1px solid var(--rule); padding-right: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+</head>
+<body>
+<div class="jacket">
+  <div class="wrap">
+    <header class="masthead">
+      <div class="brandline">
+        <svg class="seal" viewBox="0 0 100 100" role="img" aria-label="TRT seal">
+          <circle cx="50" cy="50" r="47" fill="none" stroke="#9C6B24" stroke-width="1.5"/>
+          <circle cx="50" cy="50" r="41" fill="none" stroke="#9C6B24" stroke-width="0.7" stroke-dasharray="2 3"/>
+          <text x="50" y="58" text-anchor="middle" font-family="Spectral, Georgia, serif" font-size="30" font-weight="600" fill="#EDEAE0" letter-spacing="1">TRT</text>
+        </svg>
+        <div class="names">
+          <b>TITLE RESEARCH</b>
+          <span>Abstracting &amp; Search · Est. Mid-Atlantic</span>
+        </div>
+      </div>
+      <nav>
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#order" class="cta">Place an order</a>
+      </nav>
+    </header>
+
+    <div class="hero">
+      <div>
+        <p class="eyebrow">Title search &amp; abstracting</p>
+        <h1>Clean title work, back in <em>24 to 48 hours</em>.</h1>
+        <p class="lead">TRT prepares title searches and abstracts for lenders, title agencies, and closing attorneys across the mid-Atlantic — full and two-owner searches, tax status, and the recorded documents to back every finding.</p>
+      </div>
+      <dl class="jurisdictions">
+        <dt>Jurisdictions searched</dt>
+        <dd>
+          <span>District of Columbia <i>DC</i></span>
+          <span>Maryland <i>MD</i></span>
+          <span>Virginia <i>VA</i></span>
+          <span>Delaware <i>DE</i></span>
+          <span>West Virginia <i>WV</i></span>
+        </dd>
+      </dl>
+    </div>
+  </div>
+</div>
+
+<div class="strip">
+  <div class="wrap">
+    <dl class="figure">
+      <dt>Standard turnaround</dt>
+      <dd>24–48<small>hours from order</small></dd>
+    </dl>
+    <dl class="figure">
+      <dt>Rush service</dt>
+      <dd>Same day<small>when the records allow</small></dd>
+    </dl>
+    <dl class="figure">
+      <dt>Delivered</dt>
+      <dd>Abstract + docs<small>search summary and copies included</small></dd>
+    </dl>
+  </div>
+</div>
+
+<main>
+  <section id="services" class="wrap">
+    <p class="eyebrow">Services</p>
+    <h2>What we search</h2>
+    <div class="ledger">
+      <div class="row">
+        <div class="mark">I</div>
+        <h3>Full &amp; current-owner searches</h3>
+        <p>Chain of title back to the vesting deed, with open deeds of trust, easements, and restrictions noted and abstracted.</p>
+      </div>
+      <div class="row">
+        <div class="mark">II</div>
+        <h3>Two-owner searches</h3>
+        <p>The standard lender and underwriter request, run to the required period and delivered in the same format as a full search.</p>
+      </div>
+      <div class="row">
+        <div class="mark">III</div>
+        <h3>Deed &amp; document retrieval</h3>
+        <p>Recorded deeds, deeds of trust, plats, and releases pulled from county land records and delivered as clean, legible copies.</p>
+      </div>
+      <div class="row">
+        <div class="mark">IV</div>
+        <h3>Tax status, liens &amp; judgments</h3>
+        <p>Real estate tax status including prior years' payment history, plus judgment and lien searches against the named parties.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="process" class="wrap">
+    <p class="eyebrow">Process</p>
+    <h2>How an order runs</h2>
+    <ol class="steps">
+      <li>
+        <h3>Send the order</h3>
+        <p>Property address or parcel ID, jurisdiction, search type, and the effective date you need.</p>
+      </li>
+      <li>
+        <h3>We search and abstract</h3>
+        <p>Land and tax records are examined, documents pulled, and the abstract assembled and reviewed.</p>
+      </li>
+      <li>
+        <h3>Delivered ready to use</h3>
+        <p>Abstract, summary of search, and supporting documents returned in the format your file needs.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section id="order">
+    <div class="wrap order-grid">
+      <div class="order-note">
+        <p class="eyebrow">Orders</p>
+        <h2>Place an order</h2>
+        <p>Send the property and the search you need — we confirm receipt and flag anything unusual before the clock starts.</p>
+        <p>Prefer email? Send the same details to <a href="mailto:trt.orders@gmail.com">trt.orders@gmail.com</a>.</p>
+      </div>
+      <form id="orderForm" name="order" method="POST" action="mailto:trt.orders@gmail.com" enctype="text/plain">
+        <label>
+          <span>Name</span>
+          <input type="text" name="name" autocomplete="name" required>
+        </label>
+        <label>
+          <span>Company</span>
+          <input type="text" name="company" autocomplete="organization">
+        </label>
+        <label>
+          <span>Email</span>
+          <input type="email" name="email" autocomplete="email" required>
+        </label>
+        <label>
+          <span>Phone</span>
+          <input type="tel" name="phone" autocomplete="tel">
+        </label>
+        <label class="full">
+          <span>Property address or parcel ID</span>
+          <input type="text" name="property" required>
+        </label>
+        <label>
+          <span>Jurisdiction</span>
+          <select name="jurisdiction">
+            <option>District of Columbia</option>
+            <option>Maryland</option>
+            <option selected>Virginia</option>
+            <option>Delaware</option>
+            <option>West Virginia</option>
+          </select>
+        </label>
+        <label>
+          <span>Search type</span>
+          <select name="search_type">
+            <option>Full search</option>
+            <option>Current-owner search</option>
+            <option>Two-owner search</option>
+            <option>Document retrieval</option>
+            <option>Tax / lien / judgment</option>
+          </select>
+        </label>
+        <label class="full">
+          <span>Notes — effective date, rush, anything else</span>
+          <textarea name="notes"></textarea>
+        </label>
+        <div class="full">
+          <button type="submit">Send order</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>TRT — Title Research, Inc. · DC · MD · VA · DE · WV</p>
+    <p><a href="mailto:trt.orders@gmail.com">trt.orders@gmail.com</a></p>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var form = document.getElementById('orderForm');
+    if (!form) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var f = new FormData(form);
+      var v = function (k) { return (f.get(k) || '').toString().trim(); };
+      var subject = 'Title order - ' + (v('property') || 'new request') + ' (' + v('jurisdiction') + ')';
+      var lines = [
+        'Search type: ' + v('search_type'),
+        'Jurisdiction: ' + v('jurisdiction'),
+        'Property / parcel: ' + v('property'),
+        '',
+        'Name: ' + v('name'),
+        'Company: ' + v('company'),
+        'Email: ' + v('email'),
+        'Phone: ' + v('phone'),
+        '',
+        'Notes:',
+        v('notes')
+      ];
+      window.location.href = 'mailto:trt.orders@gmail.com?subject=' +
+        encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
+    });
+  })();
+</script>
+</body>
+</html>
