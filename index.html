@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="TRT - Title Research, Inc. Title searches and abstracts for DC, Maryland, Virginia, Delaware and West Virginia. 24-48 hour standard turnaround, same-day rush.">
+<meta name="description" content="TRT - Title Research, Inc. Title searches and abstracts for lenders, title agencies, realtors and closing attorneys in DC, Maryland, Virginia, Delaware and West Virginia. 24-48 hour turnaround.">
 <title>TRT Title Research</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -301,6 +301,47 @@
   }
   button:hover { background: var(--brass); }
 
+
+  /* ============ prepay panel ============ */
+  .prepay {
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--brass);
+    background: var(--field);
+    padding: 1.6rem 1.8rem;
+    margin-bottom: 2rem;
+    display: grid;
+    gap: .9rem;
+  }
+  .prepay h3 {
+    font-family: "Spectral", Georgia, serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .prepay h3 b {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--brass);
+    font-variant-numeric: tabular-nums;
+  }
+  .prepay p { margin: 0; color: var(--muted); font-size: .96rem; }
+  .prepay a.pay {
+    justify-self: start;
+    background: var(--seal);
+    color: var(--paper);
+    text-decoration: none;
+    font-weight: 600;
+    padding: .75rem 1.8rem;
+    transition: background .18s ease;
+  }
+  .prepay a.pay:hover { background: var(--brass); }
+
   /* ============ footer ============ */
   footer { background: var(--ink-deep); color: var(--on-dark-muted); border-top: 3px double var(--brass); padding: 2.5rem 0; }
   footer .wrap { display: flex; justify-content: space-between; gap: 1.2rem; flex-wrap: wrap; align-items: center; }
@@ -343,8 +384,8 @@
     <div class="hero">
       <div>
         <p class="eyebrow">Title search &amp; abstracting</p>
-        <h1>Clean title work, back in <em>24 to 48 hours</em>.</h1>
-        <p class="lead">TRT prepares title searches and abstracts for lenders, title agencies, and closing attorneys across the mid-Atlantic — full and two-owner searches, tax status, and the recorded documents to back every finding.</p>
+        <h1>Accurate title work, back in <em>24 to 48 hours</em>.</h1>
+        <p class="lead">TRT prepares title searches and abstracts for lenders, title agencies, realtors, and closing attorneys across the mid-Atlantic — full and two-owner searches, tax status, and the recorded documents to back every finding.</p>
       </div>
       <dl class="jurisdictions">
         <dt>Jurisdictions searched</dt>
@@ -399,6 +440,11 @@
       </div>
       <div class="row">
         <div class="mark">IV</div>
+        <h3>Pre-listing title search</h3>
+        <p>Run before the property hits the market, so a lien, judgment, or clouded chain surfaces while there is still time to clear it &mdash; not days before closing. Prepaid, for listing agents.</p>
+      </div>
+      <div class="row">
+        <div class="mark">V</div>
         <h3>Tax status, liens &amp; judgments</h3>
         <p>Real estate tax status including prior years' payment history, plus judgment and lien searches against the named parties.</p>
       </div>
@@ -469,6 +515,7 @@
             <option>Full search</option>
             <option>Current-owner search</option>
             <option>Two-owner search</option>
+            <option>Pre-listing title search</option>
             <option>Document retrieval</option>
             <option>Tax / lien / judgment</option>
           </select>
