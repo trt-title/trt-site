@@ -549,26 +549,57 @@
   (function () {
     var form = document.getElementById('orderForm');
     if (!form) return;
+
+    var ENDPOINT = 'https://formsubmit.co/ajax/trt.orders@gmail.com';
+
+    var note = document.createElement('p');
+    note.className = 'full';
+    note.style.cssText = 'margin:1rem 0 0;font-size:.97rem;min-height:1.4em;';
+    form.appendChild(note);
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+
       var f = new FormData(form);
       var v = function (k) { return (f.get(k) || '').toString().trim(); };
-      var subject = 'Title order - ' + (v('property') || 'new request') + ' (' + v('jurisdiction') + ')';
-      var lines = [
-        'Search type: ' + v('search_type'),
-        'Jurisdiction: ' + v('jurisdiction'),
-        'Property / parcel: ' + v('property'),
-        '',
-        'Name: ' + v('name'),
-        'Company: ' + v('company'),
-        'Email: ' + v('email'),
-        'Phone: ' + v('phone'),
-        '',
-        'Notes:',
-        v('notes')
-      ];
-      window.location.href = 'mailto:trt.orders@gmail.com?subject=' +
-        encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
+      var btn = form.querySelector('button[type="submit"]');
+
+      var payload = {
+        _subject: 'Title order - ' + (v('property') || 'new request') + ' (' + v('jurisdiction') + ')',
+        _template: 'table',
+        Name: v('name'),
+        Company: v('company'),
+        Email: v('email'),
+        Phone: v('phone'),
+        'Property / parcel': v('property'),
+        Jurisdiction: v('jurisdiction'),
+        'Search type': v('search_type'),
+        Notes: v('notes')
+      };
+
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      note.style.color = '';
+      note.textContent = '';
+
+      fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+        .then(function (r) { if (!r.ok) { throw new Error('send failed'); } return r.json(); })
+        .then(function () {
+          form.reset();
+          btn.disabled = false;
+          btn.textContent = 'Send order';
+          note.textContent = 'Order received - we will confirm by email shortly.';
+        })
+        .catch(function () {
+          btn.disabled = false;
+          btn.textContent = 'Send order';
+          note.style.color = 'var(--brass)';
+          note.textContent = 'Could not send. Please email the details to trt.orders@gmail.com.';
+        });
     });
   })();
 </script>
