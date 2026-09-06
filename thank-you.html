@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="description" content="Payment received - TRT Title Research.">
+<title>Payment received - TRT Title Research</title>
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="10" fill="%230E1917"/><circle cx="32" cy="32" r="24" fill="none" stroke="%239C6B24" stroke-width="3"/><text x="32" y="43" font-family="Georgia,serif" font-weight="700" font-size="32" fill="%239C6B24" text-anchor="middle">T</text></svg>'>
+<meta name="theme-color" content="#0E1917">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --paper: #FBFAF6;
+    --paper-2: #F2EFE6;
+    --ink: #131C1B;
+    --ink-deep: #0E1917;
+    --muted: #5C6A66;
+    --rule: #D9D4C6;
+    --seal: #2E5D4E;
+    --brass: #9C6B24;
+    --on-dark: #EDEAE0;
+    --on-dark-muted: #9FAEA8;
+    --dark-rule: #2B3B37;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0F1614;
+      --paper-2: #151F1C;
+      --ink: #E9E7DD;
+      --ink-deep: #0A1210;
+      --muted: #94A39D;
+      --rule: #27352F;
+      --seal: #74B49B;
+      --brass: #D6A75C;
+      --on-dark: #EDEAE0;
+      --on-dark-muted: #9FAEA8;
+      --dark-rule: #27352F;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  .masthead {
+    background: var(--ink-deep);
+    padding: 1.15rem 0;
+  }
+  .wrap {
+    width: min(100% - 2.5rem, 46rem);
+    margin-inline: auto;
+  }
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: .6rem;
+    color: var(--on-dark);
+    text-decoration: none;
+    font-family: Spectral, Georgia, serif;
+  }
+  .brand b {
+    font-size: 1.32rem;
+    letter-spacing: .06em;
+    font-weight: 600;
+  }
+  .brand span {
+    font-size: .78rem;
+    letter-spacing: .17em;
+    text-transform: uppercase;
+    color: var(--on-dark-muted);
+    font-family: "IBM Plex Sans", sans-serif;
+  }
+  main { flex: 1 0 auto; padding: 3.5rem 0 4rem; }
+  .seal {
+    width: 3.1rem;
+    height: 3.1rem;
+    border-radius: 50%;
+    border: 2px solid var(--brass);
+    display: grid;
+    place-items: center;
+    margin-bottom: 1.5rem;
+  }
+  .seal svg { width: 1.5rem; height: 1.5rem; }
+  .eyebrow {
+    font-size: .74rem;
+    letter-spacing: .19em;
+    text-transform: uppercase;
+    color: var(--brass);
+    font-weight: 600;
+    margin: 0 0 .6rem;
+  }
+  h1 {
+    font-family: Spectral, Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(1.9rem, 5vw, 2.7rem);
+    line-height: 1.15;
+    margin: 0 0 1rem;
+  }
+  .lede { font-size: 1.08rem; color: var(--muted); margin: 0 0 2.4rem; max-width: 34rem; }
+  h2 {
+    font-family: Spectral, Georgia, serif;
+    font-weight: 600;
+    font-size: 1.16rem;
+    margin: 0 0 1rem;
+  }
+  .card {
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: var(--paper-2);
+    padding: 1.6rem 1.7rem;
+    margin-bottom: 2.2rem;
+  }
+  ol.next { margin: 0; padding-left: 1.15rem; }
+  ol.next li { margin-bottom: .7rem; }
+  ol.next li:last-child { margin-bottom: 0; }
+  .ref {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .93rem;
+    color: var(--muted);
+  }
+  .contact p { margin: .3rem 0; }
+  a { color: var(--brass); }
+  .back {
+    display: inline-block;
+    margin-top: 2.2rem;
+    font-size: .95rem;
+    letter-spacing: .04em;
+  }
+  footer {
+    flex-shrink: 0;
+    background: var(--ink-deep);
+    color: var(--on-dark-muted);
+    padding: 1.7rem 0;
+    font-size: .88rem;
+  }
+  footer p { margin: .25rem 0; }
+  footer a { color: var(--on-dark); }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/">
+      <b>TRT</b><span>Title Research</span>
+    </a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="seal" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#9C6B24" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+    </div>
+
+    <p class="eyebrow">Payment received</p>
+    <h1>Thank you &mdash; your order is in.</h1>
+    <p class="lede">We have your prepayment and your property details. Nothing further is needed from you right now.</p>
+
+    <div class="card">
+      <h2>What happens next</h2>
+      <ol class="next">
+        <li>You'll get a confirmation email at the address you gave us, usually within a few minutes.</li>
+        <li>We review the property and flag anything unusual before the clock starts.</li>
+        <li>Your abstract comes back within <b>4&ndash;48 hours</b>, with copies of the recorded documents attached.</li>
+      </ol>
+    </div>
+
+    <div class="card contact">
+      <h2>Need to reach us</h2>
+      <p><a href="mailto:info@titleresearchinc.com">info@titleresearchinc.com</a></p>
+      <p class="ref">(571) 246-6660</p>
+      <p class="ref">Mon&ndash;Fri, business hours</p>
+    </div>
+
+    <p>If anything about the property changed after you ordered &mdash; a corrected address, a rush, a different effective date &mdash; just reply to your confirmation email and we'll adjust it.</p>
+
+    <a class="back" href="/">&larr; Back to titleresearchinc.com</a>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>TRT &mdash; Title Research, Inc. &middot; DC &middot; MD &middot; VA &middot; DE &middot; WV</p>
+    <p><a href="mailto:info@titleresearchinc.com">info@titleresearchinc.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
