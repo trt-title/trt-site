@@ -491,7 +491,7 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
       </div>
       <form id="orderForm" name="order" method="POST" action="mailto:info@titleresearchinc.com" enctype="text/plain">
         <div class="full form-lead">
-          <b>Pre-listing search &mdash; $100, prepaid.</b> Listing agents: enter the property, send the order, and the payment button appears right below. Report back within 4&ndash;48 hours.
+          <b>Pre-listing search &mdash; $100, prepaid.</b> Listing agents: enter the property, send the order, and the payment button appears right below. Report back within 4&ndash;48 hours. Everything else is quoted &mdash; pricing depends on jurisdiction, scope and volume, so tell us what you need in the notes and we&rsquo;ll come back with a price.
         </div>
         <label>
           <span>Name</span>
@@ -526,12 +526,8 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
         <label>
           <span>Search type</span>
           <select name="search_type">
-            <option>Full search</option>
-            <option>Current-owner search</option>
-            <option>Two-owner search</option>
             <option>Pre-listing title search</option>
-            <option>Document retrieval</option>
-            <option>Tax / lien / judgment</option>
+            <option>Other (request a quote)</option>
           </select>
         </label>
         <label class="full">
@@ -612,7 +608,7 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
             note.textContent = 'Order received.';
             window.TRTrevealPayment(prop);
           } else {
-            note.textContent = 'Order received - we will confirm by email shortly.';
+            note.textContent = 'Order received - we will send a quote by email shortly.';
           }
         })
         .catch(function () {
