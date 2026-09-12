@@ -488,9 +488,9 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
         <p class="eyebrow">Orders</p>
         <h2>Place an order</h2>
         <p>Send the property and the search you need — we confirm receipt and flag anything unusual before the clock starts.</p>
-        <p>Prefer email? Send the same details to <a href="mailto:orders@titleresearchinc.com">orders@titleresearchinc.com</a>.</p>
+        <p>Prefer email? Send the same details to <a href="mailto:trt.orders@gmail.com">trt.orders@gmail.com</a>.</p>
       </div>
-      <form id="orderForm" name="order" method="POST" action="mailto:orders@titleresearchinc.com" enctype="text/plain">
+      <form id="orderForm" name="order" method="POST" action="mailto:trt.orders@gmail.com" enctype="text/plain">
         <div class="full form-lead">
           <b>Pre-listing search &mdash; $100, prepaid.</b> Listing agents: enter the property, send the order, and the payment button appears right below. Report back within 4&ndash;48 hours.
         </div>
@@ -555,7 +555,7 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
 <footer>
   <div class="wrap">
     <p>TRT — Title Research, Inc. · DC · MD · VA · DE · WV</p>
-    <p><a href="mailto:orders@titleresearchinc.com">orders@titleresearchinc.com</a></p>
+    <p><a href="mailto:trt.orders@gmail.com">trt.orders@gmail.com</a></p>
   </div>
 </footer>
 
@@ -580,7 +580,7 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
       var btn = form.querySelector('button[type="submit"]');
 
       var payload = {
-        _autoresponse: 'Your title search order has been received - we will confirm receipt and turnaround shortly. TRT Title Research | orders@titleresearchinc.com', _subject: 'Title order - ' + (v('property') || 'new request') + ' (' + v('jurisdiction') + ')',
+        _autoresponse: 'Your title search order has been received - we will confirm receipt and turnaround shortly. TRT Title Research | trt.orders@gmail.com', _subject: 'Title order - ' + (v('property') || 'new request') + ' (' + v('jurisdiction') + ')',
         _template: 'table',
         Name: v('name'),
         Company: v('company'),
@@ -620,7 +620,7 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
           btn.disabled = false;
           btn.textContent = 'Send order';
           note.style.color = 'var(--brass)';
-          note.textContent = 'Could not send. Please email the details to orders@titleresearchinc.com.';
+          note.textContent = 'Could not send. Please email the details to trt.orders@gmail.com.';
         });
     });
   })();
