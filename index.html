@@ -388,7 +388,7 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
   "url": "https://titleresearchinc.com/",
   "logo": "https://titleresearchinc.com/logo.png",
   "image": "https://titleresearchinc.com/og-image.png",
-  "email": "info@titleresearchinc.com",
+  "email": "orders@titleresearchinc.com",
   "telephone": "+1-571-246-6660",
   "address": {
     "@type": "PostalAddress",
@@ -575,10 +575,10 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
         <p class="eyebrow">Orders</p>
         <h2>Place an order</h2>
         <p>Send the property and the search you need — we confirm receipt and flag anything unusual before the clock starts.</p>
-        <p>Prefer email? Send the same details to <a href="mailto:info@titleresearchinc.com">info@titleresearchinc.com</a>.</p>
+        <p>Prefer email? Send the same details to <a href="mailto:orders@titleresearchinc.com">orders@titleresearchinc.com</a>.</p>
         <p>Rather talk it through? Call <a href="tel:+15712466660">(571)&nbsp;246-6660</a>, Monday&ndash;Friday, business hours.</p>
       </div>
-      <form id="orderForm" name="order" method="POST" action="mailto:info@titleresearchinc.com" enctype="text/plain">
+      <form id="orderForm" name="order" method="POST" action="mailto:orders@titleresearchinc.com" enctype="text/plain">
         <div class="full form-lead">
           <b>Pre-listing search &mdash; $100, prepaid.</b> Listing agents: enter the property, send the order, and the payment button appears right below. Report back within 4&ndash;48 hours. Everything else is quoted &mdash; pricing depends on jurisdiction, scope and volume, so tell us what you need in the notes and we&rsquo;ll come back with a price.
         </div>
@@ -639,7 +639,7 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
 <footer>
   <div class="wrap">
     <p>TRT — Title Research, Inc. · DC · MD · VA · DE · WV</p>
-    <p><a href="mailto:info@titleresearchinc.com">info@titleresearchinc.com</a> &middot; <a href="tel:+15712466660">(571) 246-6660</a></p>
+    <p><a href="mailto:orders@titleresearchinc.com">orders@titleresearchinc.com</a> &middot; <a href="tel:+15712466660">(571) 246-6660</a></p>
     <p>22234 Foundation Drive, Ashburn, VA 20148</p>
   </div>
 </footer>
@@ -665,7 +665,7 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
       var btn = form.querySelector('button[type="submit"]');
 
       var payload = {
-        _autoresponse: 'Your title search order has been received - we will confirm receipt and turnaround shortly. TRT Title Research | info@titleresearchinc.com', _subject: 'Title order - ' + (v('property') || 'new request') + ' (' + v('jurisdiction') + ')',
+        _autoresponse: 'Your title search order has been received - we will confirm receipt and turnaround shortly. TRT Title Research | orders@titleresearchinc.com', _subject: 'Title order - ' + (v('property') || 'new request') + ' (' + v('jurisdiction') + ')',
         _template: 'table',
         Name: v('name'),
         Company: v('company'),
@@ -705,7 +705,7 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
           btn.disabled = false;
           btn.textContent = 'Send order';
           note.style.color = 'var(--brass)';
-          note.textContent = 'Could not send. Please email the details to info@titleresearchinc.com.';
+          note.textContent = 'Could not send. Please email the details to orders@titleresearchinc.com.';
         });
     });
   })();
