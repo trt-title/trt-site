@@ -469,6 +469,10 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
   .os-actions button{width:100%}
   .os-sum{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:.8rem 1rem;background:var(--field);border:1px solid var(--rule);font-size:.93rem}
   .os-sum span:last-child{color:var(--muted)}
+  .osheet .stripe-pay{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;background:#000;color:#fff;border:0;border-radius:4px;padding:.8rem 1rem;font:600 1rem/1.2 inherit;cursor:pointer;margin:0 0 .7rem}
+  .osheet .stripe-pay:hover{background:#222}
+  .osheet .stripe-pay small{font-weight:400;opacity:.75}
+  .osheet .pay-or{text-align:center;color:var(--muted);font-size:.85rem;margin:0 0 .7rem}
   .osheet .os-back{background:transparent;color:var(--muted);padding:.4rem 0;font-weight:500}
   .osheet .os-back:hover{background:transparent;color:var(--ink)}
   .osheet .paypal-slot{max-width:none}
@@ -782,7 +786,11 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
         <h3>Prepay <b>$100</b></h3>
         <div class="full os-sum"><span>Pre-listing search</span><span id="osSumProp"></span></div>
         <p id="payMsg" class="full pay-msg"></p>
-        <div id="paypal-container-YP7NHJV75GL8L" class="full paypal-slot"></div>
+        <div class="full paypal-slot">
+          <button type="button" class="stripe-pay" id="stripePay">&#63743;&nbsp;Pay &nbsp;<small>/ Google Pay / card</small></button>
+          <p class="pay-or">or</p>
+          <div id="paypal-container-YP7NHJV75GL8L"></div>
+        </div>
         <div class="full"><button type="button" class="os-back" id="payEdit">&larr; Edit order details</button></div>
       </div>
 
@@ -874,6 +882,8 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
 
     var ENDPOINT = 'https://formsubmit.co/ajax/860faaab618029708d146f32528a6f08';
     var PRICE = '100.00';
+    var STRIPE_LINK = 'https://buy.stripe.com/3cIbJ034FaEIfeK8p68og00';
+    var STASH = 'trtStripeOrder';
 
     var card = sheet.querySelector('.os-card');
     var steps = form.querySelectorAll('.os-step');
@@ -927,7 +937,11 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
         'Search type': v('search_type'),
         Notes: v('notes')
       };
-      if (paid) {
+      if (paid && paid.stripe) {
+        p.Payment = 'PAID $' + PRICE + ' via Stripe (Apple Pay / Google Pay / card) - check it in the Stripe dashboard';
+        p['Stripe checkout session'] = paid.stripe;
+        p['Stripe reference'] = paid.ref;
+      } else if (paid) {
         p.Payment = 'PAID $' + PRICE + ' via PayPal';
         p['PayPal transaction'] = paid.captureId || paid.orderId;
         p['PayPal order'] = paid.orderId;
@@ -1018,6 +1032,46 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
         }
       }).render('#paypal-container-YP7NHJV75GL8L');
     };
+
+    // Stripe: stash the details, pay on Stripe, send the order when Stripe redirects back.
+    var store = function () { try { return window.localStorage; } catch (x) { return null; } };
+    document.getElementById('stripePay').addEventListener('click', function () {
+      var ref = 'TRT-' + Date.now().toString(36).toUpperCase();
+      var data = { ref: ref, at: Date.now(), f: {} };
+      ['property', 'jurisdiction', 'search_type', 'name', 'email', 'company', 'phone', 'notes'].forEach(function (k) { data.f[k] = v(k); });
+      var s = store();
+      if (s) { try { s.setItem(STASH, JSON.stringify(data)); } catch (x) {} }
+      location.href = STRIPE_LINK + '?client_reference_id=' + encodeURIComponent(ref) +
+        '&prefilled_email=' + encodeURIComponent(v('email'));
+    });
+
+    (function stripeReturn() {
+      var m = /[?&]stripe_paid=([^&#]+)/.exec(location.search);
+      if (!m) return;
+      var sid = decodeURIComponent(m[1]);
+      history.replaceState(null, '', location.pathname + location.hash);
+      var s = store(), data = null;
+      try { data = s && JSON.parse(s.getItem(STASH) || 'null'); } catch (x) {}
+      open();
+      if (!data || !data.f) {
+        finish('Paid<small>TRT</small>', 'Payment received.',
+          'Stripe receipt ' + sid.slice(-10) + ', but your order details were lost in this browser. Please email the property details and that receipt to orders@titleresearchinc.com.');
+        return;
+      }
+      Object.keys(data.f).forEach(function (k) { if (form.elements[k]) form.elements[k].value = data.f[k]; });
+      try { s.removeItem(STASH); } catch (x) {}
+      var paid = { stripe: sid, ref: data.ref };
+      document.getElementById('osSumProp').textContent = v('property');
+      payMsg.textContent = 'Payment received. Sending your order...';
+      show(2);
+      send(payload(paid)).then(function () {
+        finish('Paid &amp;<br>received<small>TRT</small>', 'Order placed.',
+          'Reference ' + data.ref + '. We will confirm turnaround by email.');
+      }, function () {
+        finish('Paid<small>TRT</small>', 'Payment received.',
+          'Reference ' + data.ref + ', but the order did not reach us. Please email the property details and that reference to orders@titleresearchinc.com.');
+      });
+    })();
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
