@@ -578,9 +578,9 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
         <p>Prefer email? Send the same details to <a href="mailto:orders@titleresearchinc.com">orders@titleresearchinc.com</a>.</p>
         <p>Rather talk it through? Call <a href="tel:+15712466660">(571)&nbsp;246-6660</a>, Monday&ndash;Friday, business hours.</p>
       </div>
-      <form id="orderForm" name="order" method="POST" action="mailto:orders@titleresearchinc.com" enctype="text/plain">
+      <form id="orderForm" name="order" method="POST" action="#">
         <div class="full form-lead">
-          <b>Pre-listing search &mdash; $100, prepaid.</b> Listing agents: enter the property, send the order, and the payment button appears right below. Report back within 4&ndash;48 hours. Everything else is quoted &mdash; pricing depends on jurisdiction, scope and volume, so tell us what you need in the notes and we&rsquo;ll come back with a price.
+          <b>Pre-listing search &mdash; $100, prepaid.</b> Listing agents: enter the property, prepay $100 through PayPal, and the order is sent the moment payment goes through. Report back within 4&ndash;48 hours. Everything else is quoted &mdash; pricing depends on jurisdiction, scope and volume, so tell us what you need in the notes and we&rsquo;ll come back with a price.
         </div>
         <label>
           <span>Name</span>
@@ -624,12 +624,13 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
           <textarea name="notes"></textarea>
         </label>
         <div class="full">
-          <button type="submit">Send order</button>
+          <button type="submit">Continue to payment</button>
         </div>
         <div id="payStep" class="full pay-step" hidden>
           <h3>Prepay <b>$100</b></h3>
           <p id="payMsg" class="pay-msg"></p>
           <div id="paypal-container-YP7NHJV75GL8L" class="paypal-slot"></div>
+          <p class="pay-msg" style="margin:.9rem 0 0"><a href="#" id="payEdit" onclick="return false">Edit order details</a></p>
         </div>
       </form>
     </div>
@@ -644,28 +645,37 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
   </div>
 </footer>
 
+<script src="https://www.paypal.com/sdk/js?client-id=BAAft0Q_mdr5PjjgxTSiv0Lk27gl4aqKcy5_0z1mqCiCKTgBUUFP8fy3LJv-DU_LmEgYwgbFBGha0LPeS8&components=buttons&enable-funding=venmo&currency=USD"></script>
 <script>
   (function () {
     var form = document.getElementById('orderForm');
     if (!form) return;
 
     var ENDPOINT = 'https://formsubmit.co/ajax/860faaab618029708d146f32528a6f08';
+    var PRICE = '100.00';
+
+    var btn = form.querySelector('button[type="submit"]');
+    var typeSel = form.querySelector('select[name="search_type"]');
+    var payStep = document.getElementById('payStep');
+    var payMsg = document.getElementById('payMsg');
+    var editBtn = document.getElementById('payEdit');
 
     var note = document.createElement('p');
     note.className = 'full';
     note.style.cssText = 'margin:1rem 0 0;font-size:.97rem;min-height:1.4em;';
-    var payStepEl = document.getElementById('payStep');
-    if (payStepEl) { form.insertBefore(note, payStepEl); } else { form.appendChild(note); }
+    if (payStep) { form.insertBefore(note, payStep); } else { form.appendChild(note); }
 
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
+    var v = function (k) { var el = form.elements[k]; return el ? (el.value || '').toString().trim() : ''; };
+    var isPre = function () { return v('search_type') === 'Pre-listing title search'; };
+    var fields = function () { return form.querySelectorAll('input, select, textarea'); };
+    var lock = function (on) { fields().forEach(function (el) { el.disabled = on; }); btn.hidden = on; };
+    var setLabel = function () { btn.textContent = isPre() ? 'Continue to payment' : 'Send quote request'; };
+    if (typeSel) typeSel.addEventListener('change', setLabel);
+    setLabel();
 
-      var f = new FormData(form);
-      var v = function (k) { return (f.get(k) || '').toString().trim(); };
-      var btn = form.querySelector('button[type="submit"]');
-
-      var payload = {
-        _autoresponse: 'Your title search order has been received - we will confirm receipt and turnaround shortly. TRT Title Research | orders@titleresearchinc.com', _subject: 'Title order - ' + (v('property') || 'new request') + ' (' + v('jurisdiction') + ')',
+    var payload = function (paid) {
+      var p = {
+        _autoresponse: 'Your title search order has been received - we will confirm receipt and turnaround shortly. TRT Title Research | orders@titleresearchinc.com', _subject: (paid ? 'PAID title order - ' : 'Quote request - ') + (v('property') || 'new request') + ' (' + v('jurisdiction') + ')',
         _template: 'table',
         Name: v('name'),
         Company: v('company'),
@@ -676,64 +686,122 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
         'Search type': v('search_type'),
         Notes: v('notes')
       };
+      if (paid) {
+        p.Payment = 'PAID $' + PRICE + ' via PayPal';
+        p['PayPal transaction'] = paid.captureId || paid.orderId;
+        p['PayPal order'] = paid.orderId;
+        p['Payer'] = paid.payer || '';
+      }
+      return p;
+    };
+
+    var send = function (p) {
+      return fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(p)
+      }).then(function (r) { if (!r.ok) { throw new Error('send failed'); } return r.json(); });
+    };
+
+    var done = function (msg) {
+      if (payStep) payStep.hidden = true;
+      lock(false);
+      form.reset();
+      setLabel();
+      btn.disabled = false;
+      note.style.color = '';
+      note.textContent = msg;
+    };
+
+    // Pre-listing: the order is only sent after PayPal confirms the $100 payment.
+    var rendered = false;
+    var showPayment = function () {
+      if (!payStep) return;
+      var prop = v('property');
+      payMsg.textContent = 'Prepay $100 for ' + prop + '. Your order is sent to us as soon as payment goes through.';
+      lock(true);
+      payStep.hidden = false;
+      note.style.color = '';
+      note.textContent = '';
+      if (!rendered) {
+        if (!(window.paypal && paypal.Buttons)) {
+          lock(false);
+          payStep.hidden = true;
+          note.style.color = 'var(--brass)';
+          note.textContent = 'Payment could not load. Please refresh the page, or email orders@titleresearchinc.com.';
+          return;
+        }
+        rendered = true;
+        paypal.Buttons({
+          style: { layout: 'vertical', label: 'pay' },
+          createOrder: function (data, actions) {
+            return actions.order.create({
+              intent: 'CAPTURE',
+              purchase_units: [{
+                description: ('Pre-listing title search - ' + v('property')).slice(0, 127),
+                amount: { currency_code: 'USD', value: PRICE }
+              }],
+              application_context: { shipping_preference: 'NO_SHIPPING' }
+            });
+          },
+          onApprove: function (data, actions) {
+            payMsg.textContent = 'Confirming payment...';
+            return actions.order.capture().then(function (order) {
+              var cap = order && order.purchase_units && order.purchase_units[0].payments &&
+                        order.purchase_units[0].payments.captures && order.purchase_units[0].payments.captures[0];
+              if (!order || order.status !== 'COMPLETED' || !cap || cap.status !== 'COMPLETED') {
+                throw new Error('not completed');
+              }
+              var paid = {
+                orderId: order.id,
+                captureId: cap.id,
+                payer: order.payer && order.payer.email_address
+              };
+              payMsg.textContent = 'Payment received. Sending your order...';
+              return send(payload(paid)).then(function () {
+                done('Payment received and order placed. Receipt from PayPal: ' + paid.captureId + '. We will confirm turnaround by email.');
+              }, function () {
+                done('Payment received (PayPal ' + paid.captureId + '), but the order did not reach us. Please email the property details and that PayPal number to orders@titleresearchinc.com.');
+                note.style.color = 'var(--brass)';
+              });
+            }).catch(function () {
+              payMsg.textContent = 'Payment did not go through, so no order was placed. Please try again.';
+            });
+          },
+          onCancel: function () {
+            payMsg.textContent = 'Payment cancelled, so no order was placed. Pay below to send your order.';
+          },
+          onError: function () {
+            payMsg.textContent = 'Payment error, so no order was placed. Please try again or email orders@titleresearchinc.com.';
+          }
+        }).render('#paypal-container-YP7NHJV75GL8L');
+      }
+      try { payStep.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {}
+    };
+
+    if (editBtn) editBtn.addEventListener('click', function () {
+      payStep.hidden = true;
+      lock(false);
+      btn.disabled = false;
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (isPre()) { showPayment(); return; }
 
       btn.disabled = true;
       btn.textContent = 'Sending...';
       note.style.color = '';
       note.textContent = '';
-
-      fetch(ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-        .then(function (r) { if (!r.ok) { throw new Error('send failed'); } return r.json(); })
-        .then(function () {
-          var prop = v('property');
-          var isPre = v('search_type') === 'Pre-listing title search';
-          form.reset();
-          btn.disabled = false;
-          btn.textContent = 'Send order';
-          if (isPre && window.TRTrevealPayment) {
-            note.textContent = 'Order received.';
-            window.TRTrevealPayment(prop);
-          } else {
-            note.textContent = 'Order received - we will send a quote by email shortly.';
-          }
-        })
+      send(payload(null))
+        .then(function () { done('Quote request received - we will send a quote by email shortly.'); })
         .catch(function () {
           btn.disabled = false;
-          btn.textContent = 'Send order';
+          setLabel();
           note.style.color = 'var(--brass)';
           note.textContent = 'Could not send. Please email the details to orders@titleresearchinc.com.';
         });
     });
-  })();
-</script>
-
-<script src="https://www.paypal.com/sdk/js?client-id=BAAft0Q_mdr5PjjgxTSiv0Lk27gl4aqKcy5_0z1mqCiCKTgBUUFP8fy3LJv-DU_LmEgYwgbFBGha0LPeS8&components=hosted-buttons&enable-funding=venmo&currency=USD"></script>
-<script>
-  (function () {
-    var rendered = false;
-    window.TRTrevealPayment = function (prop) {
-      var step = document.getElementById('payStep');
-      var msg  = document.getElementById('payMsg');
-      var slot = document.getElementById('paypal-container-YP7NHJV75GL8L');
-      if (!step || !slot) return;
-      step.classList.add('ready');
-      if (msg) {
-        msg.textContent = prop
-          ? 'Prepay $100 for ' + prop + ' to start the clock.'
-          : 'Prepay $100 to start the clock.';
-      }
-      step.hidden = false;
-      if (!rendered && window.paypal && paypal.HostedButtons) {
-        rendered = true;
-        paypal.HostedButtons({ hostedButtonId: "YP7NHJV75GL8L" })
-          .render("#paypal-container-YP7NHJV75GL8L");
-      }
-      try { step.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {}
-    };
   })();
 </script>
 <script>(function(){if(!('IntersectionObserver' in window))return;var vids=document.querySelectorAll('video[data-src]');var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var v=e.target;if(!v.src){v.src=v.getAttribute('data-src');v.play().catch(function(){});}io.unobserve(v);}});},{rootMargin:'400px'});vids.forEach(function(v){io.observe(v)});})();</script><script>(function(){try{if(matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver' in window))return;var els=document.querySelectorAll('section .eyebrow,section h2,.ledger .row,.steps li,.figure,.abstract-card,#sample>p,#services>p,.order-grid>*');var i=0;els.forEach(function(el){el.classList.add('rv');el.style.setProperty('--d',(i%6)*70+'ms');i++;});var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'-40px 0px'});els.forEach(function(el){io.observe(el)});}catch(e){}})();</script></body>
