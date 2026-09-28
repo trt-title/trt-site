@@ -376,6 +376,73 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
   .pay-step h3{font-family:"Spectral",Georgia,serif;font-weight:600;font-size:1.2rem;margin:0 0 .5rem;display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap}
   .pay-step h3 b{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:1.1rem;font-weight:500;color:var(--brass)}
   .pay-step.ready .pay-msg{font-style:normal;color:var(--seal);font-weight:500}
+
+  /* ============ chain of title (scroll story) ============ */
+  section.ct-chain{position:relative;height:320vh;padding:0;border-top:1px solid var(--rule)}
+  .ct-pin{position:sticky;top:0;height:100vh;display:flex;align-items:center}
+  .ct-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(1.5rem,5vw,4.5rem);align-items:center}
+  .ct-meter .eyebrow{margin-bottom:.4rem}
+  .ct-year{font-family:"Spectral",Georgia,serif;font-weight:600;font-size:clamp(5.2rem,14vw,11.5rem);line-height:.85;letter-spacing:-.04em;font-variant-numeric:lining-nums tabular-nums;color:var(--ink)}
+  .ct-status{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.82rem;color:var(--muted);margin:1.1rem 0 0;min-height:2.8em;max-width:26rem}
+  .ct-status b{color:var(--ink);font-weight:500}
+  .ct-track{height:2px;background:var(--rule);margin-top:1.3rem;max-width:21rem;overflow:hidden}
+  .ct-track i{display:block;height:100%;background:var(--brass);transform-origin:left;transform:scaleX(var(--p,1))}
+  .ct-book{position:relative;background:var(--field);border:1px solid var(--rule);border-top:3px solid var(--brass);padding:.4rem 1.4rem .6rem;box-shadow:0 24px 60px rgba(6,12,11,.12)}
+  .ct-head{display:flex;justify-content:space-between;gap:1rem;padding:.8rem 0 .7rem;border-bottom:1px solid var(--rule);font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .ct-entry{display:grid;grid-template-columns:3.4rem 1fr auto;gap:.9rem;align-items:center;padding:.75rem 0;border-bottom:1px solid var(--rule);transition:opacity .45s ease,transform .45s cubic-bezier(.2,.7,.2,1)}
+  .ct-entry:last-of-type{border-bottom:0}
+  .ct-y{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.85rem;color:var(--muted)}
+  .ct-what{font-weight:600;font-size:.97rem;line-height:1.3}
+  .ct-what small{display:block;font-family:"IBM Plex Mono",ui-monospace,monospace;font-weight:400;font-size:.74rem;color:var(--muted);margin-top:.15rem}
+  .ct-tag{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;padding:.25rem .55rem;border:1px solid var(--seal);color:var(--seal);white-space:nowrap}
+  .ct-tag.bad{border-color:#B3261E;color:#B3261E}
+  .ct-lien .ct-tag.ok{display:none}
+  .ct-lien.cleared .ct-tag.bad{display:none}
+  .ct-lien.cleared .ct-tag.ok{display:inline-block}
+  .ct-lien.cleared .ct-what{text-decoration:line-through;text-decoration-color:#B3261E;color:var(--muted)}
+  .ct-chain.armed .ct-entry{opacity:.2;transform:translateX(10px)}
+  .ct-chain.armed .ct-entry.on{opacity:1;transform:none}
+  .ct-chain.armed .ct-lien.on:not(.cleared){box-shadow:inset 3px 0 0 #B3261E;padding-left:.7rem;margin-left:-.7rem}
+  .ct-stamp{position:absolute;right:-.8rem;bottom:-1.6rem;transform:rotate(-8deg);border:3px solid var(--seal);color:var(--seal);background:var(--field);padding:.6rem 1rem;text-align:center;font-family:"Spectral",Georgia,serif;font-weight:600;font-size:1.35rem;line-height:1;text-transform:uppercase;letter-spacing:.03em;box-shadow:0 12px 30px rgba(6,12,11,.18)}
+  .ct-stamp small{display:block;font-family:"IBM Plex Mono",ui-monospace,monospace;font-weight:500;font-size:.66rem;letter-spacing:.14em;margin-top:.35rem}
+  .ct-chain.armed .ct-stamp{opacity:0;transform:rotate(-8deg) scale(1.6)}
+  .ct-chain.armed .ct-stamp.on{opacity:1;transform:rotate(-8deg) scale(1);transition:transform .35s cubic-bezier(.3,1.6,.5,1),opacity .2s}
+  @media (max-width:50rem){
+    section.ct-chain{height:280vh}
+    .ct-grid{grid-template-columns:1fr;gap:.8rem}
+    .ct-year{font-size:clamp(4rem,19vw,6.5rem)}
+    .ct-status{margin-top:.4rem;min-height:0}
+    .ct-track{display:none}
+    .ct-book{padding:.2rem .9rem .4rem}
+    .ct-entry{grid-template-columns:2.8rem 1fr auto;gap:.6rem;padding:.5rem 0}
+    .ct-what{font-size:.88rem}
+    .ct-stamp{right:-.3rem;bottom:-1.3rem;font-size:1.05rem}
+  }
+  @media (max-width:50rem) and (max-height:720px){.ct-what small{display:none}}
+
+  /* ============ interactive sample abstract ============ */
+  #sample .ab-row[role="button"]{cursor:pointer;position:relative;padding-right:1.8rem}
+  #sample .ab-row[role="button"]::after{content:"+";position:absolute;right:0;top:50%;transform:translateY(-50%);width:1.2rem;height:1.2rem;display:grid;place-items:center;border:1px solid var(--brass);color:var(--brass);font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.8rem;line-height:1;transition:transform .25s}
+  #sample .ab-row[aria-expanded="true"]::after{transform:translateY(-50%) rotate(45deg)}
+  #sample .ab-row[role="button"]:hover b{color:var(--brass)}
+  #sample .ab-row[role="button"]:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+  #sample .ab-why{font-size:.85rem;color:var(--muted);padding:.2rem 0 .9rem;border-bottom:1px solid var(--rule)}
+  #sample .ab-why ul{margin:0;padding-left:1.1rem;display:grid;gap:.2rem}
+  #sample .ab-head .rx,#sample .ab-row .rx{color:transparent;cursor:pointer;transition:background .3s ease,color .3s ease}
+  #sample .ab-head .rx.show,#sample .ab-row .rx.show{background:transparent;color:var(--brass)}
+  #sample .ab-hint{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.72rem;color:var(--muted);margin:.8rem 0 0}
+
+  /* ============ order progress ============ */
+  .order-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;list-style:none;margin:0;padding:0}
+  .order-steps li{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:.6rem;position:relative}
+  .order-steps li::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--rule)}
+  .order-steps li::after{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--brass);transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+  .order-steps li.on{color:var(--ink)}
+  .order-steps li.on::after{transform:none}
+  .order-seal{display:inline-grid;place-items:center;width:6.2rem;height:6.2rem;border-radius:50%;border:3px solid var(--seal);color:var(--seal);text-align:center;font-family:"Spectral",Georgia,serif;font-weight:600;font-size:.95rem;line-height:1.05;text-transform:uppercase;transform:rotate(-8deg);margin:.4rem 0 .6rem}
+  .order-seal small{display:block;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.58rem;letter-spacing:.12em;font-weight:500;margin-top:.25rem}
+  @media (prefers-reduced-motion:no-preference){.order-seal{animation:ctThud .5s cubic-bezier(.3,1.6,.5,1) both}}
+  @keyframes ctThud{from{transform:rotate(-8deg) scale(1.8);opacity:0}to{transform:rotate(-8deg) scale(1);opacity:1}}
 </style>
 <script data-goatcounter="https://loumalfi.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script type="application/ld+json">
@@ -518,6 +585,28 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
 </div>
 
 <main>
+  <section id="chain" class="ct-chain" aria-label="How a title search runs, record by record">
+    <div class="ct-pin">
+      <div class="wrap ct-grid">
+        <div class="ct-meter">
+          <p class="eyebrow">Following a search</p>
+          <div class="ct-year" id="ctYear">2026</div>
+          <p class="ct-status" id="ctStatus"><b>Search complete.</b> One judgment found and confirmed released.</p>
+          <div class="ct-track"><i id="ctTrack"></i></div>
+        </div>
+        <div class="ct-book">
+          <div class="ct-head"><span>Sample parcel &middot; Virginia</span><span>Two-owner</span></div>
+          <div class="ct-entry" data-at="1998"><span class="ct-y">1998</span><span class="ct-what">Deed to current owner<small>Vesting deed, land records</small></span><span class="ct-tag">Vesting</span></div>
+          <div class="ct-entry" data-at="2006"><span class="ct-y">2006</span><span class="ct-what">Deed of trust &middot; $412,000<small>Released of record, 2013</small></span><span class="ct-tag">Released</span></div>
+          <div class="ct-entry ct-lien cleared" data-at="2014" data-clear="2019"><span class="ct-y">2014</span><span class="ct-what">Judgment &middot; $18,650<small>Circuit Court judgment index</small></span><span class="ct-tag bad">Open</span><span class="ct-tag ok">Satisfied</span></div>
+          <div class="ct-entry" data-at="2019"><span class="ct-y">2019</span><span class="ct-what">Certificate of satisfaction<small>Releases the 2014 judgment</small></span><span class="ct-tag">Recorded</span></div>
+          <div class="ct-entry" data-at="2021"><span class="ct-y">2021</span><span class="ct-what">Deed of trust &middot; $505,000<small>Open, noted for payoff</small></span><span class="ct-tag">Noted</span></div>
+          <div class="ct-entry" data-at="2026"><span class="ct-y">2026</span><span class="ct-what">Real estate taxes<small>Treasurer's records</small></span><span class="ct-tag">Paid</span></div>
+          <div class="ct-stamp" id="ctStamp">Clear to close<small>Back in 4&ndash;48 hrs</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
   <section id="services" class="wrap"><video class="search-video" muted loop playsinline preload="none" aria-hidden="true" data-src="6550666-hd_1280_720_25fps.mp4"></video><div class="search-grade" aria-hidden="true"></div>
     <p class="eyebrow">Services</p>
     <h2>What we search</h2>
@@ -569,7 +658,7 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
     </ol>
   </section>
 
-  <section id="sample" class="wrap"><video class="room-video" muted loop playsinline preload="none" aria-hidden="true" data-src="8869625-hd_1366_720_25fps.mp4"></video><div class="room-grade" aria-hidden="true"></div><p class="eyebrow">Sample deliverable</p><h2>The abstract, as delivered</h2><p>Every order comes back as a one-page summary like this, with copies of the recorded documents attached.</p><div class="abstract-card" role="img" aria-label="Redacted sample title abstract"><div class="ab-head"><b>TITLE ABSTRACT</b><span>Order 2026-<span class="rx">0000</span> &middot; Loudoun County, VA</span></div><div class="ab-row"><b>Property</b><span><span class="rx">00000 Sampleford</span> Ct, <span class="rx">Ashburn</span>, VA &middot; Parcel <span class="rx">000-00-0000</span></span></div><div class="ab-row"><b>Current owner</b><span><span class="rx">Firstname M. Lastname</span>, vested by deed recorded DB <span class="rx">0000</span>/<span class="rx">000</span></span></div><div class="ab-row"><b>Chain of title</b><span>Two-owner search, 1998 to effective date</span></div><div class="ab-row"><b>Open deeds of trust</b><span>One of record &middot; <span class="rx">Lender Name Bank</span> &middot; $<span class="rx">000,000</span></span></div><div class="ab-row"><b>Judgments &amp; liens</b><span>None found of record</span></div><div class="ab-row"><b>Real estate taxes</b><span>Paid in full through 2026 &middot; no delinquencies</span></div><p class="ab-note">Client and property details redacted. Representative of a standard two-owner search.</p></div></section>  <section id="order">
+  <section id="sample" class="wrap"><video class="room-video" muted loop playsinline preload="none" aria-hidden="true" data-src="8869625-hd_1366_720_25fps.mp4"></video><div class="room-grade" aria-hidden="true"></div><p class="eyebrow">Sample deliverable</p><h2>The abstract, as delivered</h2><p>Every order comes back as a one-page summary like this, with copies of the recorded documents attached.</p><div class="abstract-card" aria-label="Redacted sample title abstract"><div class="ab-head"><b>TITLE ABSTRACT</b><span>Order 2026-<span class="rx">0000</span> &middot; Loudoun County, VA</span></div><div class="ab-row" role="button" tabindex="0" aria-expanded="false" aria-controls="abw0"><b>Property</b><span><span class="rx">00000 Sampleford</span> Ct, <span class="rx">Ashburn</span>, VA &middot; Parcel <span class="rx">000-00-0000</span></span></div><div class="ab-why" id="abw0" hidden><ul><li>Address matched to the parcel ID in county GIS and the tax roll.</li><li>Legal description checked against the vesting deed and the recorded plat.</li></ul></div><div class="ab-row" role="button" tabindex="0" aria-expanded="false" aria-controls="abw1"><b>Current owner</b><span><span class="rx">Firstname M. Lastname</span>, vested by deed recorded DB <span class="rx">0000</span>/<span class="rx">000</span></span></div><div class="ab-why" id="abw1" hidden><ul><li>Vesting deed pulled and read in full.</li><li>Checked for later conveyances, name changes and estate filings.</li></ul></div><div class="ab-row" role="button" tabindex="0" aria-expanded="false" aria-controls="abw2"><b>Chain of title</b><span>Two-owner search, 1998 to effective date</span></div><div class="ab-why" id="abw2" hidden><ul><li>Grantor and grantee indexes run for each owner in the period.</li><li>Every instrument in the chain reviewed and copied.</li></ul></div><div class="ab-row" role="button" tabindex="0" aria-expanded="false" aria-controls="abw3"><b>Open deeds of trust</b><span>One of record &middot; <span class="rx">Lender Name Bank</span> &middot; $<span class="rx">000,000</span></span></div><div class="ab-why" id="abw3" hidden><ul><li>Each deed of trust matched to a recorded release, or listed as open.</li></ul></div><div class="ab-row" role="button" tabindex="0" aria-expanded="false" aria-controls="abw4"><b>Judgments &amp; liens</b><span>None found of record</span></div><div class="ab-why" id="abw4" hidden><ul><li>Court judgment indexes searched against every owner in the period.</li><li>Federal and state tax liens and mechanics' liens checked.</li></ul></div><div class="ab-row" role="button" tabindex="0" aria-expanded="false" aria-controls="abw5"><b>Real estate taxes</b><span>Paid in full through 2026 &middot; no delinquencies</span></div><div class="ab-why" id="abw5" hidden><ul><li>Current and prior years read from the treasurer's records.</li><li>Delinquencies, penalties and special assessments checked.</li></ul></div><p class="ab-note">Client and property details redacted. Representative of a standard two-owner search.</p><p class="ab-hint">Tap a line to see what we checked. Tap a black bar to reveal it.</p></div></section>  <section id="order">
     <div class="wrap order-grid">
       <div class="order-note">
         <p class="eyebrow">Orders</p>
@@ -582,6 +671,11 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
         <div class="full form-lead">
           <b>Pre-listing search &mdash; $100, prepaid.</b> Listing agents: enter the property, prepay $100 through PayPal, and the order is sent the moment payment goes through. Report back within 4&ndash;48 hours. Everything else is quoted &mdash; pricing depends on jurisdiction, scope and volume, so tell us what you need in the notes and we&rsquo;ll come back with a price.
         </div>
+        <ol class="full order-steps" id="orderSteps" aria-label="Order progress">
+          <li class="on">1 &middot; Details</li>
+          <li>2 &middot; Pay</li>
+          <li>3 &middot; Placed</li>
+        </ol>
         <label>
           <span>Name</span>
           <input type="text" name="name" autocomplete="name" required>
@@ -645,6 +739,72 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
   </div>
 </footer>
 
+<script>
+  (function () {
+    /* order progress */
+    var lis = document.querySelectorAll('#orderSteps li');
+    window.TRTstep = function (n) {
+      for (var k = 0; k < lis.length; k++) { lis[k].classList.toggle('on', k < n); }
+    };
+
+    /* interactive sample abstract */
+    var card = document.querySelector('#sample .abstract-card');
+    if (card) {
+      var toggle = function (r) {
+        var w = document.getElementById(r.getAttribute('aria-controls'));
+        var open = r.getAttribute('aria-expanded') !== 'true';
+        r.setAttribute('aria-expanded', open); w.hidden = !open;
+      };
+      card.addEventListener('click', function (e) {
+        var x = e.target.closest('.rx');
+        if (x) { x.classList.toggle('show'); return; }
+        var r = e.target.closest('.ab-row[role="button"]');
+        if (r) toggle(r);
+      });
+      card.addEventListener('keydown', function (e) {
+        var r = e.target.closest('.ab-row[role="button"]');
+        if (r && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toggle(r); }
+      });
+    }
+
+    /* chain of title scroll */
+    var chain = document.getElementById('chain');
+    if (!chain) return;
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var yearEl = document.getElementById('ctYear'), statusEl = document.getElementById('ctStatus'),
+        track = document.getElementById('ctTrack'), stamp = document.getElementById('ctStamp'),
+        entries = [].slice.call(chain.querySelectorAll('.ct-entry')), lien = chain.querySelector('.ct-lien');
+    var msgs = [[1998, '<b>Reading the grantee index.</b> Vesting deed found.'],
+      [2006, '<b>Deed of trust recorded.</b> Looking for its release.'],
+      [2013, '<b>Release found.</b> The 2006 loan is paid off.'],
+      [2014, '<b>Judgment found against the owner.</b> Checking the court file.'],
+      [2019, '<b>Certificate of satisfaction.</b> The 2014 judgment is cleared.'],
+      [2021, '<b>New deed of trust.</b> Noted as open for payoff.'],
+      [2026, '<b>Taxes checked.</b> Paid in full.']];
+    chain.classList.add('armed');
+    var ticking = false;
+    var update = function () {
+      ticking = false;
+      var r = chain.getBoundingClientRect(), span = r.height - window.innerHeight;
+      var p = Math.min(1, Math.max(0, -r.top / Math.max(1, span)));
+      var q = Math.min(1, p / 0.86);
+      var yr = Math.round(1998 + 28 * q);
+      yearEl.textContent = yr;
+      track.style.setProperty('--p', q.toFixed(3));
+      entries.forEach(function (e) { e.classList.toggle('on', yr >= +e.getAttribute('data-at')); });
+      lien.classList.toggle('cleared', yr >= +lien.getAttribute('data-clear'));
+      var m = msgs[0][1];
+      msgs.forEach(function (x) { if (yr >= x[0]) m = x[1]; });
+      if (p >= 0.9) m = '<b>Search complete.</b> One judgment found and confirmed released.';
+      else if (p <= 0.001) m = '<b>Starting the search.</b> Scroll to follow it.';
+      statusEl.innerHTML = m;
+      stamp.classList.toggle('on', p >= 0.9);
+    };
+    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+</script>
 <script src="https://www.paypal.com/sdk/js?client-id=BAAft0Q_mdr5PjjgxTSiv0Lk27gl4aqKcy5_0z1mqCiCKTgBUUFP8fy3LJv-DU_LmEgYwgbFBGha0LPeS8&components=buttons&enable-funding=venmo&currency=USD"></script>
 <script>
   (function () {
@@ -721,6 +881,7 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
       payMsg.textContent = 'Prepay $100 for ' + prop + '. Your order is sent to us as soon as payment goes through.';
       lock(true);
       payStep.hidden = false;
+      if (window.TRTstep) TRTstep(2);
       note.style.color = '';
       note.textContent = '';
       if (!rendered) {
@@ -760,6 +921,12 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
               payMsg.textContent = 'Payment received. Sending your order...';
               return send(payload(paid)).then(function () {
                 done('Payment received and order placed. Receipt from PayPal: ' + paid.captureId + '. We will confirm turnaround by email.');
+                if (window.TRTstep) TRTstep(3);
+                var seal = document.createElement('div');
+                seal.className = 'order-seal';
+                seal.innerHTML = 'Paid &amp;<br>received<small>TRT</small>';
+                note.insertBefore(seal, note.firstChild);
+                seal.insertAdjacentHTML('afterend', '<br>');
               }, function () {
                 done('Payment received (PayPal ' + paid.captureId + '), but the order did not reach us. Please email the property details and that PayPal number to orders@titleresearchinc.com.');
                 note.style.color = 'var(--brass)';
@@ -783,11 +950,13 @@ html{scroll-behavior:smooth}.figure dd a{color:inherit;text-decoration:none;bord
       payStep.hidden = true;
       lock(false);
       btn.disabled = false;
+      if (window.TRTstep) TRTstep(1);
     });
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (isPre()) { showPayment(); return; }
+      if (window.TRTstep) TRTstep(1);
 
       btn.disabled = true;
       btn.textContent = 'Sending...';
